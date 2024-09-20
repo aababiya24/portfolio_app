@@ -22,6 +22,16 @@
   <p>
     <strong>Expected graduation date:</strong>
     <%= student.expected_graduation_date %>
+
   </p>
 
+<% if student.image.attached? %>
+  <%= image_tag(student.image, width: "150", height: "150") %>
+<% else %>
+  <p>No image available.</p>
+<% end %>
+
+
 </div>
+
+
