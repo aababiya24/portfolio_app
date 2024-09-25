@@ -1,5 +1,6 @@
 class Student < ApplicationRecord
 
+    # adding image
     has_one_attached :image
 
     validates :first_name, presence:true
