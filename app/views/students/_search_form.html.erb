@@ -1,10 +1,61 @@
 <%= form_with(url: students_path, method: :get, local: true, class: "form-inline") do |form| %>
 <div>
     <%= form.label :major, "Select Major", class: "form-label" %>
-    <%= form.select :major, options_for_select(Student::VALID_MAJORS), { prompt: "Any Major" }, name: 'search[major]', class: "form-control" %>
+    <%= form.select :major, options_for_select(Student::VALID_MAJORS), { prompt: "Select Major" }, name: 'search[major]', class: "form-control" %>
 </div>
+
+<div>
+  <%= form.label :date_condition, "Graduation Date Search", class: "form-label" %>
+  <%= form.select :date_condition, [['Before', 'before'], ['After', 'after']], {}, { class: "form-control" } %>
+</div>
+
+<div>
+  <%= form.label :expected_graduation_date, "Date", class:"form-label" %>
+  <%= form.date_field :expected_graduation_date, class: "form-control" %>
+</div>
+
 <div>
     <%= form.submit "Search", class: "btn btn-primary" %>
 </div>
+
+<div>
+    <%= link_to "Show All",students_path(show_all: true), method: :get, class: "btn btn-secondary" %>
+</div>
+
+
+
+<%#Table to show student without showing picture and email.#%>
+
+
+<h3>Search Results:</h3>
+<table class="table table-striped table-hover">
+    
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Major</th>
+      <th>Graduation Date</th>
+      <th colspan="3">Actions</th>
+    </tr>
+  </thead>
+    <% @students.each do |student| %>
+      <tr>
+        <td><%= student.first_name %></td>
+        <td><%= student.last_name %></td>
+        <td><%= student.major %></td>
+        <td><%= student.expected_graduation_date.strftime("%b %d, %Y") if student.expected_graduation_date %></td>
+        <td><%= link_to 'Show', student, class: 'btn btn-info btn-sm' %></td>
+        <td><%= link_to 'Edit', edit_student_path(student), class: 'btn btn-warning btn-sm' %></td>
+        <td><%= button_to 'Delete', student, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger btn-sm' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @students.empty? %>
+  <p class="alert alert-warning">No students found</p>
+<% end %>
+
 <% end %>
    

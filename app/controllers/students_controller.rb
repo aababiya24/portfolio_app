@@ -3,13 +3,20 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
+    Rails.logger.info "Params: #{params.inspect}"
     @search_params = params[:search] || {}
     @students = Student.all
+    Rails.logger.info "Search Params: #{@search_params.inspect}"
    
-    if @search_params[:major].present?
-      @students = @students.where(major: @search_params[:major])
-    end
-   
+  # Show all students if 'show_all' parameter is true, otherwise filter by major if provided
+  if params[:show_all] == "true"
+    @students = Student.all
+  elsif @search_params[:major].present?
+    @students = @students.where(major: @search_params[:major])
+  else
+    @students = Student.none
+  end
+
   end
 
   # GET /students/1 or /students/1.json
