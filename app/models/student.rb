@@ -1,7 +1,7 @@
 class Student < ApplicationRecord
 
     # adding image
-    has_one_attached :image, dependent: :purge_later
+    has_one_attached :profile_picture, dependent: :purge_later
 
     validates :first_name, presence:true
     validates :last_name, presence:true
