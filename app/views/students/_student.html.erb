@@ -25,8 +25,8 @@
 
   </p>
 
-<% if student.image.attached? %>
-  <%= image_tag student.image, width: "150", height: "150" %>
+<% if student.profile_picture.attached? %>
+  <%= image_tag student.profile_picture, width: "150", height: "150" %>
 <% else %>
   <%= image_tag "deafult_profile", width: "150", height: "150" %>
 <% end %>
