@@ -41,6 +41,14 @@
         </div>
       </div>
   </nav>
+
+  <% if student_signed_in? %>
+  <%= button_to "Sign Out", destroy_student_session_path, method: :destroy %>
+<% else %>
+  <%= link_to 'Sign In', new_student_session_path %>
+  <%= link_to 'Sign Up', new_student_registration_path %>
+<% end %>
+
 <%= yield %>
 
   <!-- Include Bootstrap JavaScript via CDN at the bottom of the <body> tag -->
