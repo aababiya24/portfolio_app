@@ -1,4 +1,8 @@
 class Student < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 
     # adding image
     has_one_attached :profile_picture, dependent: :purge_later
@@ -6,8 +10,14 @@ class Student < ApplicationRecord
     validates :first_name, presence:true
     validates :last_name, presence:true
 
+    validate :email_format
+    def email_format
+        unless email =~ /\A[\w+\-.]+@msudenver\.edu\z/i
+            errors.add(:email, "must be an @msudenver.edu email address")
+        end
+    end
+ 
 
-    
     validates :major, presence:true
     validates :expected_graduation_date, presence: true
 
